@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<style>
+#drag-img {
+  cursor: move;
+  position: relative;
+  width: 100%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%;
+}
+
+#container {
+  overflow: hidden;
+  background: #e9e9ed;
+  height: 496px;
+  width: 349.6px;
+}
+
+.button {
+  width: 50px;
+  height: 50px;
+  border:0px solid black;
+  border-radius: 25px;
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 700px;
+}
+
+td, th {
+  border: 0px solid black;
+  text-align: left;
+  padding: 8px;
+}
+
+</style>
+<body>
+<script>
+    function previewFile(input){
+        var file = $("input[type=file]").get(0).files[0];
+ 
+        if(file){
+            var reader = new FileReader();
+ 
+            reader.onload = function(){
+                $("#drag-img").attr("src", reader.result);
+            }
+ 
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+<div style="align:center;">
+<a href="https://lordgnomembe.github.io/ImgCrop" style="background-color:black;border:0px solid black;padding:20px;margin-top:25px;margin-left:25px;border-radius:50px;font-weight:bold;color:white;float:left;text-decoration:none;font-family: arial, sans-serif;"><i style="font-size:20px" class="fa">&#xf0c4;</i>ImgCrop</a>
+<a style="background-color:transparent;border:0px solid black;padding:20px;padding-left:0px;margin-top:25px;margin-left:25px;border-radius:50px;font-weight:bold;color:black;float:left;text-decoration:none;font-family: arial, sans-serif;">by LordGnomeMBE</a>
+</div>
+
+<!---
+<a href="#" style="background-color:grey;border:0px solid black;padding:20px;margin-top:25px;margin-left:25px;border-radius:50px;font-weight:bold;color:white;float:left;text-decoration:none;font-family: arial, sans-serif;">A Series (Paper)</a>
+<a href="#" style="background-color:grey;border:0px solid black;padding:20px;margin-top:25px;margin-left:25px;border-radius:50px;font-weight:bold;color:white;float:left;text-decoration:none;font-family: arial, sans-serif;">Square</a>
+<a href="#" style="background-color:grey;border:0px solid black;padding:20px;margin-top:25px;margin-left:25px;border-radius:50px;font-weight:bold;color:white;float:left;text-decoration:none;font-family: arial, sans-serif;">Paper (A Numbers)</a>
+<a href="#" style="background-color:grey;border:0px solid black;padding:20px;margin-top:25px;margin-left:25px;border-radius:50px;font-weight:bold;color:white;float:left;text-decoration:none;font-family: arial, sans-serif;">Paper (A Numbers)</a>
+<a href="#" style="background-color:grey;border:0px solid black;padding:20px;margin-top:25px;margin-left:25px;border-radius:50px;font-weight:bold;color:white;float:left;text-decoration:none;font-family: arial, sans-serif;">Paper (A Numbers)</a>
+-->
+
+</br></br></br></br></br>
+<center>
+<table><tr><th >
+<div id="container" style="float:left;margin:20px;">
+  <img ondragstart="return false" id="drag-img" src="/examples/images/transparent.png" alt="">
+</div>
+<p>Upload Image</p>
+<form action="/examples/actions/confirmation.php" method="post">
+        <p>
+            <input type="file" name="photo" onchange="previewFile(this);" required>
+        </p>
+        <p>
+        </p>        
+    </form>
+    <button style="padding:8px;border:0px solid black;border-radius:18px;padding-right:15px;" onClick="window.location.reload()"><i style="font-size:15px" class="fa">&#xf014;</i> <p1>Clear Canvas/New Image</p1></button>
+<p>Controls</p>
+<i style="font-weight:normal;">Use the buttons to zoom, and use your mouse to pan.</i></br></br>
+<button id="zoomout" class="button" value="Out"style="float:left;margin:5px;margin-top:0px;"><i class="fa fa-search-minus" style="font-size:24px"></i></button>
+<button id="zoomin" class="button" value="&#xf00e;" style="float:left;margin:5px;margin-top:0px;"><i style="font-size:24px;" class="fa">&#xf00e;</i></button>
+</br></br></br>
+<p>Save your Image</p>
+<div style="background-color:#e9e9ed;float:left;padding:5px;width:270px;border-radius:10px;font-weight:normal;padding:10px;margin-bottom:10px;"><center><button onclick="window.print()" style="width:90%;text-align:center;background-color:lightgrey; border:0px solid black;padding:5px;border-radius:10px;">Click to print the whole page</button> Improvements hopefully coming soon. Select "Print as PDF" or similar.</center></div>
+
+<div style="background-color:#e9e9ed;float:left;padding:5px;width:270px;border-radius:10px;font-weight:normal;padding:10px;margin-bottom:10px;"><center> <b>Screenshot the page</b></br><p1>
+Use Ctrl + <i class="fa">&#xf17a;</i> + S on Windows, Shift + CMD + 4 on Mac, or the equivalent on your OS. </p1></center></div>
+
+<div style="background-color:#e9e9ed;float:left;padding:5px;width:270px;border-radius:10px;font-weight:normal;padding:10px;"><center><p1>I'm working on a way to allow you to save the image directly. </p1></center></div>
+
+</th></tr></table></center>
+</body>
+<script>
+var img_ele = null;
+
+function zoom(zoomincrement) {
+  img_ele = document.getElementById('drag-img');
+  var pre_width = img_ele.getBoundingClientRect().width,
+  		pre_height = img_ele.getBoundingClientRect().height;
+  img_ele.style.width = (pre_width * zoomincrement) + 'px';
+  img_ele.style.height = (pre_height * zoomincrement) + 'px';
+  img_ele = null;
+}
+
+document.getElementById('zoomout').addEventListener('click', function() {
+  zoom(0.5);
+});
+document.getElementById('zoomin').addEventListener('click', function() {
+  zoom(1.5);
+});
+
+function start_drag() {
+  img_ele = this;
+  x_img_ele = window.event.clientX - document.getElementById('drag-img').offsetLeft;
+  y_img_ele = window.event.clientY - document.getElementById('drag-img').offsetTop;
+	console.log("start drag");
+}
+
+function stop_drag() {
+  img_ele = null;
+  console.log("stop drag");
+}
+
+function while_drag() {
+  var x_cursor = window.event.clientX;
+  var y_cursor = window.event.clientY;
+  if (img_ele !== null) {
+    img_ele.style.left = (x_cursor - x_img_ele) + 'px';
+    img_ele.style.top = ( window.event.clientY - y_img_ele) + 'px';
+      console.log('dragging > img_left:' + img_ele.style.left+' | img_top: '+img_ele.style.top);
+  }
+}
+
+document.getElementById('drag-img').addEventListener('mousedown', start_drag);
+document.getElementById('container').addEventListener('mousemove', while_drag);
+document.getElementById('container').addEventListener('mouseup', stop_drag);
+</script>
+</html>
